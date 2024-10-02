@@ -1,15 +1,34 @@
 import {
+  IonButton,
+  IonCol,
   IonContent,
-  IonHeader,
+  IonGrid,
+  IonImg,
   IonPage,
-  IonTitle,
-  IonToolbar,
+  IonRow,
+  useIonRouter,
 } from '@ionic/react';
+import './Home.css';
 
-const Home: React.FC = () => {
+type HomeProps = { setLoadSave: (loadSave: boolean) => void };
+
+const Home: React.FC<HomeProps> = ({ setLoadSave }) => {
+  const router = useIonRouter();
+
+  function navigateToGame(loadSave: boolean) {
+    setLoadSave(loadSave);
+    router.push('/game', 'none');
+  }
+
   return (
     <IonPage>
-      <IonContent fullscreen>Content</IonContent>
+      <IonContent>
+        <div className="home-content">
+          <IonImg className="hero-icon" src="../../public/favicon.png" />
+          <IonButton onClick={() => navigateToGame(true)}>Continue</IonButton>
+          <IonButton onClick={() => navigateToGame(false)}>New Game</IonButton>
+        </div>
+      </IonContent>
     </IonPage>
   );
 };

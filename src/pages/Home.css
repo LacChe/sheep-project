@@ -1,0 +1,12 @@
+.home-content {
+  padding-top: 40vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.hero-icon::part(image) {
+  max-width: 100px;
+}
