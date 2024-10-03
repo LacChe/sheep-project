@@ -19,17 +19,29 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
   const tempAbilityButtons = [0, 1, 2];
 
   const router = useIonRouter();
-  const [level, setlevel] = useState<number>(
-    loadSave ? 1 : 0,
-  ); /*load from save*/
-  const [tilesInBoard, setTilesOnBoard] = useState<string[][][]>(
-    loadSave ? [] : generateBasicLevel(level) /*load from save*/,
-  );
-  const [removeTileId, setRemoveTileId] = useState<string>('');
+  const [level, setlevel] = useState<number>(0);
+  const [tilesInBoard, setTilesOnBoard] = useState<string[][][]>([]);
   const [tilesInHand, setTilesInHand] = useState<string[]>([]);
+  const [removeTileId, setRemoveTileId] = useState<string>('');
+
+  useEffect(() => {
+    if (loadSave) {
+      // load save data
+      // setlevel()
+      // setTilesInHand()
+      // setTilesOnBoard()
+    } else {
+      // new game and save new data
+      setlevel(0);
+      setTilesInHand([]);
+      setTilesOnBoard(generateBasicLevel(0));
+      /* save */
+    }
+  }, []);
 
   function navigateToHome() {
-    router.push('/home', 'none');
+    /* save */
+    router.goBack();
   }
 
   useEffect(() => {
@@ -72,7 +84,7 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
       </IonHeader>
       <IonContent className="ion-padding">
         <div className="game-content">
-          <div>Level #</div>
+          <div>Level {level}</div>
           <TilesBoard
             tiles={tilesInBoard}
             setTiles={setTilesOnBoard}
