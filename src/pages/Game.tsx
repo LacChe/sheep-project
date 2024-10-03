@@ -7,7 +7,7 @@ import {
   IonToolbar,
   useIonRouter,
 } from '@ionic/react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Game.css';
 import TilesBoard from '../components/TilesBoard';
 import HandTiles from '../components/HandTiles';
@@ -15,39 +15,65 @@ import HandTiles from '../components/HandTiles';
 type GameProps = { loadSave: boolean };
 
 const Game: React.FC<GameProps> = ({ loadSave = false }) => {
-  const router = useIonRouter();
-  const tempTilesInBoard = [
-    [
-      ['11a', '11b', '11c', '11d', '11e', '11f', '11g'],
-      ['12a', '12b', '12c', '12d', '12e', '12f', '12g'],
-      ['13a', '13b', '13c', '13d', '13e', '13f', '13g'],
-      ['14a', '14b', '14c', '14d', '14e', '14f', '14g'],
-      ['15a', '15b', '15c', '15d', '15e', '15f', '15g'],
-      ['16a', '16b', '16c', '16d', '16e', '16f', '16g'],
-    ],
-    [
-      ['21a', '21b', '21c', '21d', '21e', '21f', ''],
-      ['22a', '', '', '', '', '22f', ''],
-      ['23a', '', '', '', '', '23f', ''],
-      ['24a', '', '', '', '', '24f', ''],
-      ['', '', '', '', '', '', ''],
-      ['', '', '', '', '', '', ''],
-    ],
-    [
-      ['41a', '', '41c', '', '41e', '', ''],
-      ['42a', '', '42c', '', '42e', '', ''],
-      ['43a', '', '43c', '', '43e', '', ''],
-      ['44a', '', '44c', '', '44e', '', ''],
-      ['45a', '', '45c', '', '45e', '', ''],
-      ['', '', '', '', '', '', ''],
-    ],
-  ];
   const tempAbilityButtons = [0, 1, 2];
+
+  const router = useIonRouter();
+  const [tilesInBoard, setTilesOnBoard] = useState<string[][][]>(
+    loadSave ? [] : generateLevel(0) /*load from save*/,
+  );
+  const [removeTileId, setRemoveTileId] = useState<string>('');
+  const [tilesInHand, setTilesInHand] = useState<string[]>([]);
 
   console.log(loadSave);
 
   function navigateToHome() {
     router.push('/home', 'none');
+  }
+
+  useEffect(() => {
+    /* save */
+    checkThreeOfTheSame();
+  }, [tilesInHand]);
+
+  function checkThreeOfTheSame() {
+    tilesInHand.forEach((tileId) => {
+      if (tilesInHand.filter((t) => t === tileId).length === 3) {
+        removeTilesFromHand(tileId);
+      }
+    });
+  }
+
+  function addTileToHand(tile: string) {
+    if (tilesInHand.length < 7) {
+      setTilesInHand((prev) => [...prev, tile]);
+    } else throw new Error("Can't add more than 7 tiles to a row");
+  }
+
+  function removeTilesFromHand(tileId: string) {
+    setRemoveTileId(tileId);
+    setTimeout(() => {
+      setTilesInHand((prev) => prev.filter((t) => t !== tileId));
+      setRemoveTileId('');
+    }, 500);
+  }
+
+  function generateLevel(level: number) {
+    let tilesOnBoard: string[][][] = [];
+    for (let layerIndex = 0; layerIndex < 3; layerIndex++) {
+      let layer: string[][] = [];
+      for (let rowIndex = 0; rowIndex < 6; rowIndex++) {
+        let row: string[] = [];
+        for (let tileIndex = 0; tileIndex < 6; tileIndex++) {
+          const randomNumber = Math.floor(Math.random() * 5).toString();
+          if (layerIndex % 2 !== 0 && (rowIndex === 5 || tileIndex === 5))
+            row.push('');
+          else row.push(randomNumber === '0' ? '' : randomNumber);
+        }
+        layer.push(row);
+      }
+      tilesOnBoard.push(layer);
+    }
+    return tilesOnBoard;
   }
 
   return (
@@ -62,8 +88,12 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
       <IonContent className="ion-padding">
         <div className="game-content">
           <div>Level #</div>
-          <TilesBoard tiles={tempTilesInBoard} />
-          <HandTiles />
+          <TilesBoard
+            tiles={tilesInBoard}
+            setTiles={setTilesOnBoard}
+            addTileToHand={addTileToHand}
+          />
+          <HandTiles removeTileId={removeTileId} tilesInHand={tilesInHand} />
           <div className="abilities">
             {tempAbilityButtons.map((tile) => (
               <div className="ability-button" key={tile}>

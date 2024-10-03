@@ -1,45 +1,26 @@
 import { IonButton, IonCard } from '@ionic/react';
-import React, { useState } from 'react';
+import React from 'react';
 import './HandTiles.css';
 
-type HandTilesProps = {};
+type HandTilesProps = { tilesInHand: string[]; removeTileId: string };
 
-const HandTiles: React.FC<HandTilesProps> = () => {
-  const [removeTileId, setRemoveTileId] = useState('');
-  const [tempTilesInRow, setTempTilesInRow] = useState([
-    '89',
-    '90',
-    '90',
-    '93',
-    '94',
-    '95',
-    '96',
-  ]);
+export function addTile() {}
 
-  function removeTilesFromHand(tile: string) {
-    setRemoveTileId(tile);
-    setTimeout(() => {
-      setTempTilesInRow((prev) => prev.filter((t) => t !== tile));
-      setRemoveTileId('');
-    }, 500);
-  }
-
+const HandTiles: React.FC<HandTilesProps> = ({ tilesInHand, removeTileId }) => {
   return (
     <IonCard className="hand-tiles-row">
-      {tempTilesInRow.map((tile, index) => (
+      {tilesInHand.map((tileId, index) => (
         <IonButton
           style={{
-            transition: removeTileId !== tile ? 'none' : 'all 0.5s ease-in-out',
-            width: removeTileId === tile ? '0px' : 'var(--tile-width)',
-            opacity: removeTileId === tile ? '0' : '1',
-          }}
-          onClick={() => {
-            removeTilesFromHand(tile);
+            transition:
+              removeTileId !== tileId ? 'none' : 'all 0.5s ease-in-out',
+            width: removeTileId === tileId ? '0px' : 'var(--tile-width)',
+            opacity: removeTileId === tileId ? '0' : '1',
           }}
           className="tile"
           key={index}
         >
-          {tile}
+          {tileId}
         </IonButton>
       ))}
     </IonCard>

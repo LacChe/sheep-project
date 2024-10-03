@@ -1,11 +1,19 @@
 import { IonButton, IonCard } from '@ionic/react';
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
 import './TilesBoard.css';
 
-type TileBoardProps = { tiles: string[][][] };
+type TileBoardProps = {
+  tiles: string[][][];
+  addTileToHand: (tile: string) => void;
+  setTiles: Dispatch<SetStateAction<string[][][]>>;
+};
 
-const TilesBoard: React.FC<TileBoardProps> = ({ tiles }) => {
+const TilesBoard: React.FC<TileBoardProps> = ({
+  tiles,
+  addTileToHand,
+  setTiles,
+}) => {
   const tileWidthCSS = getComputedStyle(document.body).getPropertyValue(
     '--tile-width',
   );
@@ -24,7 +32,18 @@ const TilesBoard: React.FC<TileBoardProps> = ({ tiles }) => {
     rowIndex: number,
     tileIndex: number,
     tile: string,
-  ) {}
+  ) {
+    try {
+      addTileToHand(tile);
+      setTiles((prev) => {
+        let newTiles = [...prev];
+        newTiles[layerIndex][rowIndex][tileIndex] = '';
+        return newTiles;
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   function isClickable(
     layerIndex: number,
@@ -111,7 +130,7 @@ const TilesBoard: React.FC<TileBoardProps> = ({ tiles }) => {
               // shift every other row offset x by half tile
               layerIndex % 2 === 0
                 ? '0'
-                : `min(calc(${tileWidthCSS}*0.45), calc(${tileMaxWidthCSS}*0.45))`
+                : `min(calc(${tileWidthCSS}*0.5), calc(${tileMaxWidthCSS}*0.5))`
             }, calc(${-100 * layerIndex}%))`,
             pointerEvents: 'none',
           }}
@@ -124,7 +143,7 @@ const TilesBoard: React.FC<TileBoardProps> = ({ tiles }) => {
                   // shift every other row offset y by half tile
                   layerIndex % 2 === 0
                     ? '0'
-                    : `min(calc(${tileHeightCSS}*0.45), calc(${tileMaxHeightCSS}*0.45))`
+                    : `min(calc(${tileHeightCSS}*0.5), calc(${tileMaxHeightCSS}*0.5))`
                 })`,
                 pointerEvents: 'none',
               }}

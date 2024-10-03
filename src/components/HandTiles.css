@@ -7,4 +7,6 @@
   padding: 2px;
   width: calc(var(--tile-width) * 7 + 16px);
   max-width: calc(var(--tile-max-width) * 7 + 16px);
+  height: calc(var(--tile-height) + 4px);
+  max-height: calc(var(--tile-max-height) + 4px);
 }
