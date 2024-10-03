@@ -1,0 +1,14 @@
+.tiles-board {
+  background-color: brown;
+  height: calc(var(--tile-width) * 10);
+  max-height: calc(var(--tile-max-width) * 10);
+  width: calc(var(--tile-width) * 10);
+  max-width: calc(var(--tile-max-width) * 10);
+  padding-top: calc(var(--tile-max-width) * 0.8);
+}
+
+.tiles-board-row {
+  display: flex;
+  flex-direction: row;
+  overflow: visible;
+}

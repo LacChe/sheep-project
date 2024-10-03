@@ -1,2 +1,9 @@
 /* For information on how to create your own theme, please see:
 http://ionicframework.com/docs/theming/ */
+
+:root {
+  --tile-width: 9vw;
+  --tile-max-width: 48px;
+  --tile-height: 12vw;
+  --tile-max-height: 64px;
+}

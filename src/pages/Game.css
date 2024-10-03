@@ -1,24 +1,9 @@
-:root {
-  --tile-width: 9vw;
-  --tile-max-width: 48px;
-  --tile-height: 12vw;
-  --tile-max-height: 64px;
-}
-
 .game-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 10px;
-}
-
-.tiles-board {
-  background-color: brown;
-  height: calc(var(--tile-width) * 10);
-  max-height: calc(var(--tile-max-width) * 10);
-  width: calc(var(--tile-width) * 10);
-  max-width: calc(var(--tile-max-width) * 10);
 }
 
 .tile-row,
@@ -32,6 +17,8 @@
 }
 
 .tile {
+  --border-radius: 0;
+  margin: 0;
   background-color: blue;
   width: var(--tile-width);
   max-width: var(--tile-max-width);
