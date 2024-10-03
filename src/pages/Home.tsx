@@ -1,19 +1,30 @@
 import {
   IonButton,
-  IonCol,
   IonContent,
-  IonGrid,
   IonImg,
   IonPage,
-  IonRow,
   useIonRouter,
+  useIonViewDidEnter,
 } from '@ionic/react';
+import { useState } from 'react';
+import { Preferences } from '@capacitor/preferences';
 import './Home.css';
 
 type HomeProps = { setLoadSave: (loadSave: boolean) => void };
 
 const Home: React.FC<HomeProps> = ({ setLoadSave }) => {
   const router = useIonRouter();
+
+  const [saveExists, setSaveExists] = useState<boolean>(false);
+
+  useIonViewDidEnter(() => {
+    checkHasSaveData();
+  });
+
+  async function checkHasSaveData() {
+    const { value } = await Preferences.get({ key: 'saveExists' });
+    if (value) setSaveExists(await JSON.parse(value));
+  }
 
   function navigateToGame(loadSave: boolean) {
     setLoadSave(loadSave);
@@ -25,7 +36,9 @@ const Home: React.FC<HomeProps> = ({ setLoadSave }) => {
       <IonContent>
         <div className="home-content">
           <IonImg className="hero-icon" src="../../public/favicon.png" />
-          <IonButton onClick={() => navigateToGame(true)}>Continue</IonButton>
+          {saveExists && (
+            <IonButton onClick={() => navigateToGame(true)}>Continue</IonButton>
+          )}
           <IonButton onClick={() => navigateToGame(false)}>New Game</IonButton>
         </div>
       </IonContent>

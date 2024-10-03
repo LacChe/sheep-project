@@ -8,10 +8,11 @@ import {
   useIonRouter,
 } from '@ionic/react';
 import React, { useEffect, useState } from 'react';
-import './Game.css';
 import TilesBoard from '../components/TilesBoard';
 import HandTiles from '../components/HandTiles';
 import { generateBasicLevel } from '../utils/levelGenerator';
+import { Preferences } from '@capacitor/preferences';
+import './Game.css';
 
 type GameProps = { loadSave: boolean };
 
@@ -25,27 +26,60 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
   const [removeTileId, setRemoveTileId] = useState<string>('');
 
   useEffect(() => {
+    handleLoad();
+  }, []);
+
+  async function handleLoad() {
     if (loadSave) {
       // load save data
-      // setlevel()
-      // setTilesInHand()
+      const levelValue = (await Preferences.get({ key: 'level' }))?.value;
+      if (levelValue) setlevel(await JSON.parse(levelValue));
       // setTilesOnBoard()
+      const tilesInBoardValue = (await Preferences.get({ key: 'tilesInBoard' }))
+        ?.value;
+      if (tilesInBoardValue)
+        setTilesOnBoard(await JSON.parse(tilesInBoardValue));
+      // setTilesInHand()
+      const tilesInHandValue = (await Preferences.get({ key: 'tilesInHand' }))
+        ?.value;
+      if (tilesInHandValue) setTilesInHand(await JSON.parse(tilesInHandValue));
+      /* TODO load abilities used */
     } else {
       // new game and save new data
       setlevel(0);
       setTilesInHand([]);
       setTilesOnBoard(generateBasicLevel(0));
-      /* save */
+      /* TODO set abilities used */
+      handleSave();
     }
-  }, []);
+  }
 
   function navigateToHome() {
-    /* save */
+    handleSave();
     router.goBack();
   }
 
+  function handleSave() {
+    Preferences.set({
+      key: 'saveExists',
+      value: JSON.stringify(true),
+    });
+    Preferences.set({
+      key: 'level',
+      value: JSON.stringify(level),
+    });
+    Preferences.set({
+      key: 'tilesInBoard',
+      value: JSON.stringify(tilesInBoard),
+    });
+    Preferences.set({
+      key: 'tilesInHand',
+      value: JSON.stringify(tilesInHand),
+    });
+    /* TODO save abilities used */
+  }
+
   useEffect(() => {
-    /* save */
     setTimeout(() => {
       checkThreeOfTheSame();
     }, 500);

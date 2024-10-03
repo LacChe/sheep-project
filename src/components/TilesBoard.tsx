@@ -125,6 +125,7 @@ const TilesBoard: React.FC<TileBoardProps> = ({
       {tiles.map((layer, layerIndex) => (
         // LAYER
         <div
+          key={layerIndex}
           style={{
             transform: `translate(${
               // shift every other row offset x by half tile
