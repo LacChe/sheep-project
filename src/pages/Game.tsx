@@ -10,6 +10,7 @@ import {
 import React from 'react';
 import './Game.css';
 import TilesBoard from '../components/TilesBoard';
+import HandTiles from '../components/HandTiles';
 
 type GameProps = { loadSave: boolean };
 
@@ -41,7 +42,6 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
       ['', '', '', '', '', '', ''],
     ],
   ];
-  const tempTilesInRow = [0, 1, 2, 3, 4, 5, 6];
   const tempAbilityButtons = [0, 1, 2];
 
   console.log(loadSave);
@@ -63,13 +63,7 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
         <div className="game-content">
           <div>Level #</div>
           <TilesBoard tiles={tempTilesInBoard} />
-          <div className="tile-row">
-            {tempTilesInRow.map((tile) => (
-              <div className="tile" key={tile}>
-                {tile}
-              </div>
-            ))}
-          </div>
+          <HandTiles />
           <div className="abilities">
             {tempAbilityButtons.map((tile) => (
               <div className="ability-button" key={tile}>

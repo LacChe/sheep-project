@@ -1,0 +1,10 @@
+.hand-tiles-row {
+  background-color: brown;
+  display: flex;
+  gap: 2px;
+  justify-content: start;
+  align-items: center;
+  padding: 2px;
+  width: calc(var(--tile-width) * 7 + 16px);
+  max-width: calc(var(--tile-max-width) * 7 + 16px);
+}
