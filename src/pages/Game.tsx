@@ -11,6 +11,7 @@ import React, { useEffect, useState } from 'react';
 import './Game.css';
 import TilesBoard from '../components/TilesBoard';
 import HandTiles from '../components/HandTiles';
+import { generateBasicLevel } from '../utils/levelGenerator';
 
 type GameProps = { loadSave: boolean };
 
@@ -18,13 +19,14 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
   const tempAbilityButtons = [0, 1, 2];
 
   const router = useIonRouter();
+  const [level, setlevel] = useState<number>(
+    loadSave ? 1 : 0,
+  ); /*load from save*/
   const [tilesInBoard, setTilesOnBoard] = useState<string[][][]>(
-    loadSave ? [] : generateLevel(0) /*load from save*/,
+    loadSave ? [] : generateBasicLevel(level) /*load from save*/,
   );
   const [removeTileId, setRemoveTileId] = useState<string>('');
   const [tilesInHand, setTilesInHand] = useState<string[]>([]);
-
-  console.log(loadSave);
 
   function navigateToHome() {
     router.push('/home', 'none');
@@ -32,7 +34,9 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
 
   useEffect(() => {
     /* save */
-    checkThreeOfTheSame();
+    setTimeout(() => {
+      checkThreeOfTheSame();
+    }, 500);
   }, [tilesInHand]);
 
   function checkThreeOfTheSame() {
@@ -55,25 +59,6 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
       setTilesInHand((prev) => prev.filter((t) => t !== tileId));
       setRemoveTileId('');
     }, 500);
-  }
-
-  function generateLevel(level: number) {
-    let tilesOnBoard: string[][][] = [];
-    for (let layerIndex = 0; layerIndex < 3; layerIndex++) {
-      let layer: string[][] = [];
-      for (let rowIndex = 0; rowIndex < 6; rowIndex++) {
-        let row: string[] = [];
-        for (let tileIndex = 0; tileIndex < 6; tileIndex++) {
-          const randomNumber = Math.floor(Math.random() * 5).toString();
-          if (layerIndex % 2 !== 0 && (rowIndex === 5 || tileIndex === 5))
-            row.push('');
-          else row.push(randomNumber === '0' ? '' : randomNumber);
-        }
-        layer.push(row);
-      }
-      tilesOnBoard.push(layer);
-    }
-    return tilesOnBoard;
   }
 
   return (
