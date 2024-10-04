@@ -38,3 +38,9 @@
   height: var(--tile-height);
   max-height: var(--tile-max-height);
 }
+
+.confetti {
+  position: fixed;
+  top: 50vh;
+  left: 50vw;
+}

@@ -8,9 +8,9 @@ const VALID_TILE_IDS: string[] = ['a', 'b', 'c', 'd', 'e']; // TODO set to image
 
 export function generateTestLevel(level: number) {
   let tilesOnBoard: string[][][] = [];
-  for (let layerIndex = 0; layerIndex < level + 2; layerIndex++) {
+  for (let layerIndex = 0; layerIndex < level + 1; layerIndex++) {
     let layer: string[][] = [];
-    for (let rowIndex = 0; rowIndex < 2; rowIndex++) {
+    for (let rowIndex = 0; rowIndex < 1; rowIndex++) {
       let row: string[] = [];
       row.push('A');
       row.push('A');

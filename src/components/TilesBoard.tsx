@@ -39,8 +39,8 @@ const TilesBoard: React.FC<TileBoardProps> = ({
       const tileElem = document.querySelectorAll(
         `#tile-${layerIndex}-${rowIndex}-${tileIndex}`,
       )[0] as HTMLElement;
-      tileElem.style.opacity = `0`;
-      tileElem.style.transition = `all 0.2s ease-in-out`;
+      tileElem.style.opacity = '0';
+      tileElem.style.transition = 'all 0.2s ease-in-out';
       // then remove
       setTimeout(() => {
         setTiles((prev) => {
@@ -48,6 +48,8 @@ const TilesBoard: React.FC<TileBoardProps> = ({
           newTiles[layerIndex][rowIndex][tileIndex] = '';
           return newTiles;
         });
+        tileElem.style.opacity = '1';
+        tileElem.style.transition = 'none';
       }, 200);
     } catch (err) {
       console.log(err);

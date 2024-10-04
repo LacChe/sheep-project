@@ -1,4 +1,5 @@
 import {
+  IonAlert,
   IonButton,
   IonButtons,
   IonContent,
@@ -10,8 +11,9 @@ import {
 import React, { useEffect, useState } from 'react';
 import TilesBoard from '../components/TilesBoard';
 import HandTiles from '../components/HandTiles';
-import { generateBasicLevel, generateTestLevel } from '../utils/levelGenerator';
+import { generateTestLevel } from '../utils/levelGenerator';
 import { Preferences } from '@capacitor/preferences';
+import ConfettiExplosion from 'react-confetti-explosion';
 import './Game.css';
 
 type GameProps = { loadSave: boolean };
@@ -21,11 +23,14 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
 
   const router = useIonRouter();
   const [level, setlevel] = useState<number>(0);
-  const [tilesInBoard, setTilesOnBoard] = useState<string[][][]>([]);
+  const [tilesInBoard, setTilesInBoard] = useState<string[][][]>([]);
   const [tilesInHand, setTilesInHand] = useState<string[]>([]);
   const [removeTileId, setRemoveTileId] = useState<string>('');
   const [justAddedtile, setJustAddedTile] = useState<boolean>(false);
   const [allowPointer, setAllowPointer] = useState<boolean>(true);
+  const [initDone, setInitDone] = useState<boolean>(false);
+  const [isLevelClearedAlertOpen, setIsLevelClearedAlertOpen] =
+    useState<boolean>(false);
 
   useEffect(() => {
     handleLoad();
@@ -36,11 +41,11 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
       // load save data
       const levelValue = (await Preferences.get({ key: 'level' }))?.value;
       if (levelValue) setlevel(await JSON.parse(levelValue));
-      // setTilesOnBoard()
+      // setTilesInBoard()
       const tilesInBoardValue = (await Preferences.get({ key: 'tilesInBoard' }))
         ?.value;
       if (tilesInBoardValue)
-        setTilesOnBoard(await JSON.parse(tilesInBoardValue));
+        setTilesInBoard(await JSON.parse(tilesInBoardValue));
       // setTilesInHand()
       const tilesInHandValue = (await Preferences.get({ key: 'tilesInHand' }))
         ?.value;
@@ -50,9 +55,10 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
       // new game
       setlevel(0);
       setTilesInHand([]);
-      setTilesOnBoard(generateTestLevel(0));
+      setTilesInBoard(generateTestLevel(0));
       /* TODO set abilities used */
     }
+    setInitDone(true);
   }
 
   function navigateToHome() {
@@ -61,7 +67,6 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
   }
 
   function handleSave() {
-    console.log('save', tilesInBoard);
     Preferences.set({
       key: 'saveExists',
       value: JSON.stringify(true),
@@ -79,6 +84,37 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
       value: JSON.stringify(tilesInHand),
     });
     /* TODO save abilities used */
+  }
+
+  useEffect(() => {
+    if (initDone && checkLevelClear()) {
+      setIsLevelClearedAlertOpen(true);
+    }
+  }, [tilesInBoard]);
+
+  function setNextLevel() {
+    setTilesInBoard(generateTestLevel(level + 1));
+    setlevel((prev) => prev + 1);
+  }
+
+  function checkLevelClear() {
+    for (let layerIndex = 0; layerIndex < tilesInBoard.length; layerIndex++) {
+      for (
+        let rowIndex = 0;
+        rowIndex < tilesInBoard[layerIndex].length;
+        rowIndex++
+      ) {
+        for (
+          let tileIndex = 0;
+          tileIndex < tilesInBoard[layerIndex][rowIndex].length;
+          tileIndex++
+        ) {
+          if (tilesInBoard[layerIndex][rowIndex][tileIndex] !== '')
+            return false;
+        }
+      }
+    }
+    return true;
   }
 
   useEffect(() => {
@@ -137,7 +173,7 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
           <div>Level {level}</div>
           <TilesBoard
             tiles={tilesInBoard}
-            setTiles={setTilesOnBoard}
+            setTiles={setTilesInBoard}
             addTileToHand={addTileToHand}
           />
           <HandTiles
@@ -152,6 +188,23 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
               </div>
             ))}
           </div>
+        </div>
+        <IonAlert
+          header="Level Cleared!"
+          is-open={isLevelClearedAlertOpen}
+          buttons={[
+            {
+              text: 'Continue',
+              role: 'confirm',
+              handler: () => {
+                setIsLevelClearedAlertOpen(false);
+                setNextLevel();
+              },
+            },
+          ]}
+        ></IonAlert>
+        <div className="confetti">
+          {isLevelClearedAlertOpen && <ConfettiExplosion force={1} />}
         </div>
       </IonContent>
     </IonPage>
