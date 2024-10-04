@@ -222,7 +222,10 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
               },
             },
           ]}
-          // TODO continue on dismiss
+          onDidDismiss={() => {
+            setIsLevelClearedAlertOpen(false);
+            setNextLevel();
+          }}
         ></IonAlert>
         <div className="confetti">
           {isLevelClearedAlertOpen && <ConfettiExplosion force={1} />}

@@ -10,14 +10,14 @@ export function generateTestLevel(level: number) {
   let tilesOnBoard: string[][][] = [];
   for (let layerIndex = 0; layerIndex < level + 1; layerIndex++) {
     let layer: string[][] = [];
-    for (let rowIndex = 0; rowIndex < 3; rowIndex++) {
+    for (let rowIndex = 0; rowIndex < 1; rowIndex++) {
       let row: string[] = [];
       row.push('A');
-      row.push('B');
-      row.push('C');
+      row.push('A');
       row.push('A');
       row.push('B');
-      row.push('C');
+      row.push('B');
+      row.push('B');
       layer.push(row);
     }
     tilesOnBoard.push(layer);
