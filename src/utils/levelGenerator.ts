@@ -6,6 +6,25 @@ const VALID_TILE_IDS: string[] = ['a', 'b', 'c', 'd', 'e']; // TODO set to image
 // TODO limit types of tiles
 // TODO make sure all tiles are multiples of three
 
+export function generateTestLevel(level: number) {
+  let tilesOnBoard: string[][][] = [];
+  for (let layerIndex = 0; layerIndex < level + 2; layerIndex++) {
+    let layer: string[][] = [];
+    for (let rowIndex = 0; rowIndex < 2; rowIndex++) {
+      let row: string[] = [];
+      row.push('A');
+      row.push('A');
+      row.push('A');
+      row.push('B');
+      row.push('B');
+      row.push('B');
+      layer.push(row);
+    }
+    tilesOnBoard.push(layer);
+  }
+  return tilesOnBoard;
+}
+
 export function generateBasicLevel(level: number) {
   let tilesOnBoard: string[][][] = [];
   for (let layerIndex = 0; layerIndex < level + 2; layerIndex++) {

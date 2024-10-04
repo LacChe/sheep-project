@@ -6,6 +6,10 @@
   gap: 10px;
 }
 
+.pointer-disabled * {
+  pointer-events: none !important;
+}
+
 .abilities {
   background-color: brown;
   display: flex;

@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import TilesBoard from '../components/TilesBoard';
 import HandTiles from '../components/HandTiles';
-import { generateBasicLevel } from '../utils/levelGenerator';
+import { generateBasicLevel, generateTestLevel } from '../utils/levelGenerator';
 import { Preferences } from '@capacitor/preferences';
 import './Game.css';
 
@@ -25,6 +25,7 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
   const [tilesInHand, setTilesInHand] = useState<string[]>([]);
   const [removeTileId, setRemoveTileId] = useState<string>('');
   const [justAddedtile, setJustAddedTile] = useState<boolean>(false);
+  const [allowPointer, setAllowPointer] = useState<boolean>(true);
 
   useEffect(() => {
     handleLoad();
@@ -46,12 +47,11 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
       if (tilesInHandValue) setTilesInHand(await JSON.parse(tilesInHandValue));
       /* TODO load abilities used */
     } else {
-      // new game and save new data
+      // new game
       setlevel(0);
       setTilesInHand([]);
-      setTilesOnBoard(generateBasicLevel(0));
+      setTilesOnBoard(generateTestLevel(0));
       /* TODO set abilities used */
-      handleSave();
     }
   }
 
@@ -61,6 +61,7 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
   }
 
   function handleSave() {
+    console.log('save', tilesInBoard);
     Preferences.set({
       key: 'saveExists',
       value: JSON.stringify(true),
@@ -98,19 +99,25 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
     if (tilesInHand.length < 7) {
       setTilesInHand((prev) => [...prev, tile]);
       setJustAddedTile(true);
+      setAllowPointer(false);
       setTimeout(() => {
         setJustAddedTile(false);
       }, 50);
+      setTimeout(() => {
+        setAllowPointer(true);
+      }, 500);
     } else throw new Error("Can't add more than 7 tiles to a row");
   }
 
   function removeTilesFromHand(tileId: string) {
     // fade tiles out
     setRemoveTileId(tileId);
+    setAllowPointer(false);
     // then remove
     setTimeout(() => {
       setTilesInHand((prev) => prev.filter((t) => t !== tileId));
       setRemoveTileId('');
+      setAllowPointer(true);
     }, 500);
   }
 
@@ -124,7 +131,9 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-        <div className="game-content">
+        <div
+          className={`game-content${!allowPointer ? ' pointer-disabled' : ''}`}
+        >
           <div>Level {level}</div>
           <TilesBoard
             tiles={tilesInBoard}
