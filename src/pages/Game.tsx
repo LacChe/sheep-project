@@ -11,7 +11,6 @@ import {
 import React, { useEffect, useState } from 'react';
 import TilesBoard from '../components/TilesBoard';
 import HandTiles from '../components/HandTiles';
-import AbilityButtons from '../components/AbilityButtons';
 import { generateTestLevel } from '../utils/levelGenerator';
 import { Preferences } from '@capacitor/preferences';
 import ConfettiExplosion from 'react-confetti-explosion';
@@ -24,11 +23,7 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
   const [level, setlevel] = useState<number>(0);
   const [tilesInBoard, setTilesInBoard] = useState<string[][][]>([]);
   const [tilesInHand, setTilesInHand] = useState<string[]>([]);
-  const [abilityUses, setAbilityUses] = useState<[0 | 1, 0 | 1, 0 | 1]>([
-    1, 1, 1,
-  ]);
   const [removeTileId, setRemoveTileId] = useState<string>('');
-  const [removeTileIndex, setRemoveTileIndex] = useState<number>(8);
   const [justAddedtile, setJustAddedTile] = useState<boolean>(false);
   const [allowPointer, setAllowPointer] = useState<boolean>(true);
   const [initDone, setInitDone] = useState<boolean>(false);
@@ -53,16 +48,11 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
       const tilesInHandValue = (await Preferences.get({ key: 'tilesInHand' }))
         ?.value;
       if (tilesInHandValue) setTilesInHand(await JSON.parse(tilesInHandValue));
-      // setTilesInHand()
-      const abilityUsesValue = (await Preferences.get({ key: 'abilityUses' }))
-        ?.value;
-      if (abilityUsesValue) setAbilityUses(await JSON.parse(abilityUsesValue));
     } else {
       // new game
       setlevel(0);
       setTilesInHand([]);
       setTilesInBoard(generateTestLevel(0));
-      setAbilityUses([1, 1, 1]);
     }
     setInitDone(true);
   }
@@ -89,10 +79,6 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
       key: 'tilesInHand',
       value: JSON.stringify(tilesInHand),
     });
-    Preferences.set({
-      key: 'abilityUses',
-      value: JSON.stringify(abilityUses),
-    });
   }
 
   useEffect(() => {
@@ -103,7 +89,6 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
 
   function setNextLevel() {
     setTilesInBoard(generateTestLevel(level + 1));
-    setAbilityUses([1, 1, 1]);
     setlevel((prev) => prev + 1);
   }
 
@@ -167,18 +152,6 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
     }, 500);
   }
 
-  function removeTileFromHandByIndex(tileIndex: number) {
-    // fade tiles out
-    setRemoveTileIndex(tileIndex);
-    setAllowPointer(false);
-    // then remove
-    setTimeout(() => {
-      setTilesInHand((prev) => prev.filter((_, index) => index !== tileIndex));
-      setRemoveTileIndex(8);
-      setAllowPointer(true);
-    }, 500);
-  }
-
   return (
     <IonPage>
       <IonHeader className="ion-no-border">
@@ -200,13 +173,8 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
           />
           <HandTiles
             removeTileId={removeTileId}
-            removeTileIndex={removeTileIndex}
             tilesInHand={tilesInHand}
             justAddedtile={justAddedtile}
-          />
-          <AbilityButtons
-            abilityUses={abilityUses}
-            setAbilityUses={setAbilityUses}
           />
         </div>
         <IonAlert
@@ -216,10 +184,7 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
             {
               text: 'Continue',
               role: 'confirm',
-              handler: () => {
-                setIsLevelClearedAlertOpen(false);
-                setNextLevel();
-              },
+              handler: () => {},
             },
           ]}
           onDidDismiss={() => {

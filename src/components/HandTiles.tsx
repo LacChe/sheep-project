@@ -5,14 +5,12 @@ import './HandTiles.css';
 type HandTilesProps = {
   tilesInHand: string[];
   removeTileId: string;
-  removeTileIndex: number;
   justAddedtile: boolean;
 };
 
 const HandTiles: React.FC<HandTilesProps> = ({
   tilesInHand,
   removeTileId,
-  removeTileIndex,
   justAddedtile,
 }) => {
   return (
@@ -23,16 +21,11 @@ const HandTiles: React.FC<HandTilesProps> = ({
           style={{
             transition:
               removeTileId === tileId ||
-              removeTileIndex === index ||
               (index === tilesInHand.length - 1 && justAddedtile)
                 ? 'all 0.5s ease-in-out'
                 : 'none',
-            width:
-              removeTileId === tileId || removeTileIndex === index
-                ? '0px'
-                : 'var(--tile-width)',
-            opacity:
-              removeTileId === tileId || removeTileIndex === index ? '0' : '1',
+            width: removeTileId === tileId ? '0px' : 'var(--tile-width)',
+            opacity: removeTileId === tileId ? '0' : '1',
           }}
           className="tile"
           key={index}

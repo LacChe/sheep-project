@@ -49,7 +49,7 @@ const TilesBoard: React.FC<TileBoardProps> = ({
           return newTiles;
         });
         tileElem.style.opacity = '1';
-        tileElem.style.transition = 'none';
+        tileElem.style.transition = 'none 0.2s ease-in-out';
       }, 200);
     } catch (err) {
       console.log(err);
@@ -116,8 +116,7 @@ const TilesBoard: React.FC<TileBoardProps> = ({
         style={{
           visibility: `${tile === '' ? 'hidden' : 'visible'}`,
           pointerEvents: `${clickable ? 'auto' : 'none'}`,
-          // clickable tiles are highlited with bright border
-          border: `${clickable ? '2px solid yellow' : 'none'}`,
+          borderRadius: '5px',
           // tiles get darker the further down they are
           filter: `brightness(${
             130 - (tiles.length - (layerIndex + 1)) * 10
