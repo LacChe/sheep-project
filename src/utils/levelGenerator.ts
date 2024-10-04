@@ -1,29 +1,34 @@
-const BOARD_SIZE = 4;
+const BOARD_SIZE = 6;
 
-const VALID_TILE_IDS: string[] = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']; // TODO set to images
+const VALID_TILE_IDS: string[] = [
+  'a',
+  'b',
+  'c',
+  'd',
+  'e',
+  'f',
+  'g',
+  'h',
+  'i',
+  'j',
+  'k',
+  'l',
+  'm',
+  'n',
+  'o',
+  'p',
+  'q',
+  'r',
+  's',
+  't',
+  'u',
+  'v',
+  'w',
+  'x',
+  'y',
+  'z',
+]; // TODO set to images
 // TODO set level shape templates
-
-// TODO limit types of tiles
-// TODO make sure all tiles are multiples of three
-
-export function generateTestLevel(level: number) {
-  let tilesOnBoard: string[][][] = [];
-  for (let layerIndex = 0; layerIndex < level + 1; layerIndex++) {
-    let layer: string[][] = [];
-    for (let rowIndex = 0; rowIndex < 1; rowIndex++) {
-      let row: string[] = [];
-      row.push('A');
-      row.push('A');
-      row.push('A');
-      row.push('B');
-      row.push('B');
-      row.push('B');
-      layer.push(row);
-    }
-    tilesOnBoard.push(layer);
-  }
-  return tilesOnBoard;
-}
 
 export function generateBasicLevel(level: number) {
   let tilesOnBoard: string[][][] = [];
@@ -31,7 +36,8 @@ export function generateBasicLevel(level: number) {
   // generate list of shuffled tiles to be added to board
   const ALLOWED_TILE_IDS_AMOUNT = level + 3;
   const TOTAL_TILE_AMOUNT =
-    (level + 1) * BOARD_SIZE * BOARD_SIZE - Math.trunc((level + 1) / 2) * 7;
+    (level + 1) * BOARD_SIZE * BOARD_SIZE -
+    Math.trunc((level + 1) / 2) * (BOARD_SIZE * 2 - 1);
   let tilesToBeAdded: string[] = [];
   for (let i = 0; i < TOTAL_TILE_AMOUNT; i++) {
     const RANDOM_INDEX = Math.trunc(Math.random() * ALLOWED_TILE_IDS_AMOUNT);

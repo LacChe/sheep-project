@@ -22,7 +22,7 @@ const HandTiles: React.FC<HandTilesProps> = ({
             transition:
               removeTileId === tileId ||
               (index === tilesInHand.length - 1 && justAddedtile)
-                ? 'all 0.5s ease-in-out'
+                ? 'all 0.2s ease-in-out'
                 : 'none',
             width: removeTileId === tileId ? '0px' : 'var(--tile-width)',
             opacity: removeTileId === tileId ? '0' : '1',

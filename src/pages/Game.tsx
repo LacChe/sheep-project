@@ -122,7 +122,7 @@ const Game: React.FC<GameProps> = ({ loadSave = true }) => {
   useEffect(() => {
     setTimeout(() => {
       checkThreeOfTheSame();
-    }, 500);
+    }, 200);
   }, [tilesInHand]);
 
   function checkThreeOfTheSame() {
@@ -140,10 +140,10 @@ const Game: React.FC<GameProps> = ({ loadSave = true }) => {
       setAllowPointer(false);
       setTimeout(() => {
         setJustAddedTile(false);
-      }, 500);
+      }, 200);
       setTimeout(() => {
         setAllowPointer(true);
-      }, 500);
+      }, 200);
     } else throw new Error("Can't add more than 7 tiles to a row");
   }
 
@@ -156,7 +156,7 @@ const Game: React.FC<GameProps> = ({ loadSave = true }) => {
       setTilesInHand((prev) => prev.filter((t) => t !== tileId));
       setRemoveTileId('');
       setAllowPointer(true);
-    }, 500);
+    }, 200);
   }
 
   return (
