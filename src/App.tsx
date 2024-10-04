@@ -38,7 +38,7 @@ import { useState } from 'react';
 setupIonicReact();
 
 const App: React.FC = () => {
-  const [loadSave, setLoadSave] = useState(false);
+  const [loadSave, setLoadSave] = useState(true);
 
   return (
     <IonApp>

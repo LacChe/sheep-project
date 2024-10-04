@@ -18,7 +18,7 @@ import './Game.css';
 
 type GameProps = { loadSave: boolean };
 
-const Game: React.FC<GameProps> = ({ loadSave = false }) => {
+const Game: React.FC<GameProps> = ({ loadSave = true }) => {
   const router = useIonRouter();
   const [level, setlevel] = useState<number>(0);
   const [tilesInBoard, setTilesInBoard] = useState<string[][][]>([]);
@@ -35,20 +35,26 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
   }, []);
 
   async function handleLoad() {
+    let loadSaveSuccess = true;
     if (loadSave) {
       // load save data
       const levelValue = (await Preferences.get({ key: 'level' }))?.value;
       if (levelValue) setlevel(await JSON.parse(levelValue));
+      else loadSaveSuccess = false;
       // setTilesInBoard()
       const tilesInBoardValue = (await Preferences.get({ key: 'tilesInBoard' }))
         ?.value;
       if (tilesInBoardValue)
         setTilesInBoard(await JSON.parse(tilesInBoardValue));
+      else loadSaveSuccess = false;
       // setTilesInHand()
       const tilesInHandValue = (await Preferences.get({ key: 'tilesInHand' }))
         ?.value;
       if (tilesInHandValue) setTilesInHand(await JSON.parse(tilesInHandValue));
-    } else {
+      else loadSaveSuccess = false;
+    }
+
+    if (!loadSaveSuccess) {
       // new game
       setlevel(0);
       setTilesInHand([]);
@@ -63,6 +69,7 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
   }
 
   function handleSave() {
+    console.log('save');
     Preferences.set({
       key: 'saveExists',
       value: JSON.stringify(true),
@@ -93,6 +100,7 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
   }
 
   function checkLevelClear() {
+    handleSave();
     for (let layerIndex = 0; layerIndex < tilesInBoard.length; layerIndex++) {
       for (
         let rowIndex = 0;
