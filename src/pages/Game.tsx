@@ -11,6 +11,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import TilesBoard from '../components/TilesBoard';
 import HandTiles from '../components/HandTiles';
+import AbilityButtons from '../components/AbilityButtons';
 import { generateTestLevel } from '../utils/levelGenerator';
 import { Preferences } from '@capacitor/preferences';
 import ConfettiExplosion from 'react-confetti-explosion';
@@ -19,12 +20,13 @@ import './Game.css';
 type GameProps = { loadSave: boolean };
 
 const Game: React.FC<GameProps> = ({ loadSave = false }) => {
-  const tempAbilityButtons = [0, 1, 2];
-
   const router = useIonRouter();
   const [level, setlevel] = useState<number>(0);
   const [tilesInBoard, setTilesInBoard] = useState<string[][][]>([]);
   const [tilesInHand, setTilesInHand] = useState<string[]>([]);
+  const [abilityUses, setAbilityUses] = useState<[0 | 1, 0 | 1, 0 | 1]>([
+    1, 1, 1,
+  ]);
   const [removeTileId, setRemoveTileId] = useState<string>('');
   const [justAddedtile, setJustAddedTile] = useState<boolean>(false);
   const [allowPointer, setAllowPointer] = useState<boolean>(true);
@@ -50,13 +52,16 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
       const tilesInHandValue = (await Preferences.get({ key: 'tilesInHand' }))
         ?.value;
       if (tilesInHandValue) setTilesInHand(await JSON.parse(tilesInHandValue));
-      /* TODO load abilities used */
+      // setTilesInHand()
+      const abilityUsesValue = (await Preferences.get({ key: 'abilityUses' }))
+        ?.value;
+      if (abilityUsesValue) setAbilityUses(await JSON.parse(abilityUsesValue));
     } else {
       // new game
       setlevel(0);
       setTilesInHand([]);
       setTilesInBoard(generateTestLevel(0));
-      /* TODO set abilities used */
+      setAbilityUses([1, 1, 1]);
     }
     setInitDone(true);
   }
@@ -83,7 +88,10 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
       key: 'tilesInHand',
       value: JSON.stringify(tilesInHand),
     });
-    /* TODO save abilities used */
+    Preferences.set({
+      key: 'abilityUses',
+      value: JSON.stringify(abilityUses),
+    });
   }
 
   useEffect(() => {
@@ -94,6 +102,7 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
 
   function setNextLevel() {
     setTilesInBoard(generateTestLevel(level + 1));
+    setAbilityUses([1, 1, 1]);
     setlevel((prev) => prev + 1);
   }
 
@@ -181,13 +190,10 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
             tilesInHand={tilesInHand}
             justAddedtile={justAddedtile}
           />
-          <div className="abilities">
-            {tempAbilityButtons.map((tile) => (
-              <div className="ability-button" key={tile}>
-                {tile}
-              </div>
-            ))}
-          </div>
+          <AbilityButtons
+            abilityUses={abilityUses}
+            setAbilityUses={setAbilityUses}
+          />
         </div>
         <IonAlert
           header="Level Cleared!"

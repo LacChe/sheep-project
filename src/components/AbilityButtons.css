@@ -1,0 +1,22 @@
+.ability-buttons {
+  background-color: brown;
+  display: flex;
+  gap: 2px;
+  justify-content: start;
+  align-items: center;
+  padding: 2px;
+  width: calc(var(--tile-width) * 7 + 16px);
+  max-width: calc(var(--tile-max-width) * 7 + 16px);
+}
+
+.ability-button {
+  transition: all 0.5s ease-in-out;
+  width: calc(var(--tile-width) * 2.5);
+  max-width: calc(var(--tile-max-width) * 2.5);
+  height: var(--tile-height);
+  max-height: var(--tile-max-height);
+}
+
+.ability-button[style*='pointer-events: none'] {
+  filter: brightness(60%);
+}
