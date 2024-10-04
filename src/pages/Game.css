@@ -17,7 +17,7 @@
   max-width: var(--tile-max-width);
   height: var(--tile-height);
   max-height: var(--tile-max-height);
-  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.5);
 }
 
 .confetti {

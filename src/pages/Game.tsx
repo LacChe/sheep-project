@@ -11,7 +11,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import TilesBoard from '../components/TilesBoard';
 import HandTiles from '../components/HandTiles';
-import { generateTestLevel } from '../utils/levelGenerator';
+import { generateBasicLevel } from '../utils/levelGenerator';
 import { Preferences } from '@capacitor/preferences';
 import ConfettiExplosion from 'react-confetti-explosion';
 import './Game.css';
@@ -54,11 +54,11 @@ const Game: React.FC<GameProps> = ({ loadSave = true }) => {
       else loadSaveSuccess = false;
     }
 
-    if (!loadSaveSuccess) {
+    if (!loadSaveSuccess || !loadSave) {
       // new game
       setlevel(0);
       setTilesInHand([]);
-      setTilesInBoard(generateTestLevel(0));
+      setTilesInBoard(generateBasicLevel(0));
     }
     setInitDone(true);
   }
@@ -69,7 +69,6 @@ const Game: React.FC<GameProps> = ({ loadSave = true }) => {
   }
 
   function handleSave() {
-    console.log('save');
     Preferences.set({
       key: 'saveExists',
       value: JSON.stringify(true),
@@ -95,7 +94,7 @@ const Game: React.FC<GameProps> = ({ loadSave = true }) => {
   }, [tilesInBoard]);
 
   function setNextLevel() {
-    setTilesInBoard(generateTestLevel(level + 1));
+    setTilesInBoard(generateBasicLevel(level + 1));
     setlevel((prev) => prev + 1);
   }
 
