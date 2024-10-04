@@ -5,31 +5,34 @@ import './HandTiles.css';
 type HandTilesProps = {
   tilesInHand: string[];
   removeTileId: string;
+  removeTileIndex: number;
   justAddedtile: boolean;
 };
 
 const HandTiles: React.FC<HandTilesProps> = ({
   tilesInHand,
   removeTileId,
+  removeTileIndex,
   justAddedtile,
 }) => {
   return (
     <IonCard className="hand-tiles-row">
       {tilesInHand.map((tileId, index) => (
-        // transition opacity when being removed or being added as last tile
+        // transition opacity when adding or removing tile
         <IonButton
           style={{
             transition:
-              removeTileId !== tileId ||
-              (index === tilesInHand.length - 1 && justAddedtile)
-                ? 'none'
-                : 'all 0.5s ease-in-out',
-            width: removeTileId === tileId ? '0px' : 'var(--tile-width)',
-            opacity:
               removeTileId === tileId ||
+              removeTileIndex === index ||
               (index === tilesInHand.length - 1 && justAddedtile)
-                ? '0'
-                : '1',
+                ? 'all 0.5s ease-in-out'
+                : 'none',
+            width:
+              removeTileId === tileId || removeTileIndex === index
+                ? '0px'
+                : 'var(--tile-width)',
+            opacity:
+              removeTileId === tileId || removeTileIndex === index ? '0' : '1',
           }}
           className="tile"
           key={index}

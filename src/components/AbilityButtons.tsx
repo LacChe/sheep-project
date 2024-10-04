@@ -12,11 +12,41 @@ const AbilityButtons: React.FC<AbilityButtonsProps> = ({
   setAbilityUses,
 }) => {
   function handleAbilityClick(abilityIndex: number) {
-    setAbilityUses((prev) => {
-      let newAbilityUses: [0 | 1, 0 | 1, 0 | 1] = [...prev];
-      newAbilityUses[abilityIndex] = 0;
-      return newAbilityUses;
-    });
+    let abilitySuccess = false;
+    switch (abilityIndex) {
+      case 0:
+        abilitySuccess = handleReturn3();
+        break;
+      case 1:
+        abilitySuccess = handleRandomize();
+        break;
+      case 2:
+        abilitySuccess = handleUndo();
+        break;
+    }
+    // TODO only after success
+    if (abilitySuccess) {
+      setAbilityUses((prev) => {
+        let newAbilityUses: [0 | 1, 0 | 1, 0 | 1] = [...prev];
+        newAbilityUses[abilityIndex] = 0;
+        return newAbilityUses;
+      });
+    }
+  }
+
+  function handleReturn3() {
+    console.log('return3');
+    return true;
+  }
+
+  function handleRandomize() {
+    console.log('randomize');
+    return true;
+  }
+
+  function handleUndo() {
+    console.log('undo');
+    return true;
   }
 
   return (

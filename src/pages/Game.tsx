@@ -28,6 +28,7 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
     1, 1, 1,
   ]);
   const [removeTileId, setRemoveTileId] = useState<string>('');
+  const [removeTileIndex, setRemoveTileIndex] = useState<number>(8);
   const [justAddedtile, setJustAddedTile] = useState<boolean>(false);
   const [allowPointer, setAllowPointer] = useState<boolean>(true);
   const [initDone, setInitDone] = useState<boolean>(false);
@@ -147,7 +148,7 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
       setAllowPointer(false);
       setTimeout(() => {
         setJustAddedTile(false);
-      }, 50);
+      }, 500);
       setTimeout(() => {
         setAllowPointer(true);
       }, 500);
@@ -162,6 +163,18 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
     setTimeout(() => {
       setTilesInHand((prev) => prev.filter((t) => t !== tileId));
       setRemoveTileId('');
+      setAllowPointer(true);
+    }, 500);
+  }
+
+  function removeTileFromHandByIndex(tileIndex: number) {
+    // fade tiles out
+    setRemoveTileIndex(tileIndex);
+    setAllowPointer(false);
+    // then remove
+    setTimeout(() => {
+      setTilesInHand((prev) => prev.filter((_, index) => index !== tileIndex));
+      setRemoveTileIndex(8);
       setAllowPointer(true);
     }, 500);
   }
@@ -187,6 +200,7 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
           />
           <HandTiles
             removeTileId={removeTileId}
+            removeTileIndex={removeTileIndex}
             tilesInHand={tilesInHand}
             justAddedtile={justAddedtile}
           />
@@ -208,6 +222,7 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
               },
             },
           ]}
+          // TODO continue on dismiss
         ></IonAlert>
         <div className="confetti">
           {isLevelClearedAlertOpen && <ConfettiExplosion force={1} />}

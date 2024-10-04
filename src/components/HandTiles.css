@@ -10,3 +10,7 @@
   height: calc(var(--tile-height) + 4px);
   max-height: calc(var(--tile-max-height) + 4px);
 }
+
+.hand-tiles-row > .tiles {
+  opacity: 0;
+}
