@@ -3,6 +3,9 @@ const BOARD_SIZE = 6;
 const VALID_TILE_IDS: string[] = ['a', 'b', 'c', 'd', 'e']; // TODO set to images
 // TODO set level shape templates
 
+// TODO limit types of tiles
+// TODO make sure all tiles are multiples of three
+
 export function generateBasicLevel(level: number) {
   let tilesOnBoard: string[][][] = [];
   for (let layerIndex = 0; layerIndex < level + 2; layerIndex++) {

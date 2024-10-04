@@ -24,6 +24,7 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
   const [tilesInBoard, setTilesOnBoard] = useState<string[][][]>([]);
   const [tilesInHand, setTilesInHand] = useState<string[]>([]);
   const [removeTileId, setRemoveTileId] = useState<string>('');
+  const [justAddedtile, setJustAddedTile] = useState<boolean>(false);
 
   useEffect(() => {
     handleLoad();
@@ -96,11 +97,17 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
   function addTileToHand(tile: string) {
     if (tilesInHand.length < 7) {
       setTilesInHand((prev) => [...prev, tile]);
+      setJustAddedTile(true);
+      setTimeout(() => {
+        setJustAddedTile(false);
+      }, 50);
     } else throw new Error("Can't add more than 7 tiles to a row");
   }
 
   function removeTilesFromHand(tileId: string) {
+    // fade tiles out
     setRemoveTileId(tileId);
+    // then remove
     setTimeout(() => {
       setTilesInHand((prev) => prev.filter((t) => t !== tileId));
       setRemoveTileId('');
@@ -124,7 +131,11 @@ const Game: React.FC<GameProps> = ({ loadSave = false }) => {
             setTiles={setTilesOnBoard}
             addTileToHand={addTileToHand}
           />
-          <HandTiles removeTileId={removeTileId} tilesInHand={tilesInHand} />
+          <HandTiles
+            removeTileId={removeTileId}
+            tilesInHand={tilesInHand}
+            justAddedtile={justAddedtile}
+          />
           <div className="abilities">
             {tempAbilityButtons.map((tile) => (
               <div className="ability-button" key={tile}>

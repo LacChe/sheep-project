@@ -35,11 +35,20 @@ const TilesBoard: React.FC<TileBoardProps> = ({
   ) {
     try {
       addTileToHand(tile);
-      setTiles((prev) => {
-        let newTiles = [...prev];
-        newTiles[layerIndex][rowIndex][tileIndex] = '';
-        return newTiles;
-      });
+      // fade tile out
+      const tileElem = document.querySelectorAll(
+        `#tile-${layerIndex}-${rowIndex}-${tileIndex}`,
+      )[0] as HTMLElement;
+      tileElem.style.opacity = `0`;
+      tileElem.style.transition = `all 0.2s ease-in-out`;
+      // then remove
+      setTimeout(() => {
+        setTiles((prev) => {
+          let newTiles = [...prev];
+          newTiles[layerIndex][rowIndex][tileIndex] = '';
+          return newTiles;
+        });
+      }, 200);
     } catch (err) {
       console.log(err);
     }
@@ -114,6 +123,7 @@ const TilesBoard: React.FC<TileBoardProps> = ({
         }}
         onClick={() => handleTileClick(layerIndex, rowIndex, tileIndex, tile)}
         key={`tile-${layerIndex}-${rowIndex}-${tileIndex}`}
+        id={`tile-${layerIndex}-${rowIndex}-${tileIndex}`}
       >
         {tile}
       </IonButton>
