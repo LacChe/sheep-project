@@ -119,7 +119,9 @@ const TilesBoard: React.FC<TileBoardProps> = ({
           borderRadius: '5px',
           // tiles get darker the further down they are
           filter: `brightness(${
-            130 - (tiles.length - (layerIndex + 1)) * 10
+            100 +
+            (tiles.length / 2) * 10 -
+            (tiles.length - (layerIndex + 1)) * (60 / tiles.length)
           }%)`,
         }}
         onClick={() => handleTileClick(layerIndex, rowIndex, tileIndex, tile)}

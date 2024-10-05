@@ -11,7 +11,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import TilesBoard from '../components/TilesBoard';
 import HandTiles from '../components/HandTiles';
-import { generateBasicLevel } from '../utils/levelGenerator';
+import { generateTemplateLevel } from '../utils/levelGenerator';
 import { Preferences } from '@capacitor/preferences';
 import ConfettiExplosion from 'react-confetti-explosion';
 import './Game.css';
@@ -58,7 +58,7 @@ const Game: React.FC<GameProps> = ({ loadSave = true }) => {
       // new game
       setlevel(0);
       setTilesInHand([]);
-      setTilesInBoard(generateBasicLevel(0));
+      setTilesInBoard(generateTemplateLevel(0));
     }
     setInitDone(true);
   }
@@ -94,7 +94,7 @@ const Game: React.FC<GameProps> = ({ loadSave = true }) => {
   }, [tilesInBoard]);
 
   function setNextLevel() {
-    setTilesInBoard(generateBasicLevel(level + 1));
+    setTilesInBoard(generateTemplateLevel(level + 1));
     setlevel((prev) => prev + 1);
   }
 
