@@ -92,7 +92,8 @@ const Game: React.FC<GameProps> = ({ loadSave = true }) => {
   useEffect(() => {
     if (initDone && checkLevelClear()) {
       let audio = document.getElementById('woohoo') as HTMLAudioElement;
-      audio?.play();
+      audio.currentTime = 0;
+      audio.play();
       setIsLevelClearedAlertOpen(true);
     }
   }, [tilesInBoard]);
@@ -133,7 +134,8 @@ const Game: React.FC<GameProps> = ({ loadSave = true }) => {
     tilesInHand.forEach((tileId) => {
       if (tilesInHand.filter((t) => t === tileId).length === 3) {
         let audio = document.getElementById('shimmer') as HTMLAudioElement;
-        audio?.play();
+        audio.currentTime = 0;
+        audio.play();
         removeTilesFromHand(tileId);
       }
     });

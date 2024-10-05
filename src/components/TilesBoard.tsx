@@ -36,7 +36,8 @@ const TilesBoard: React.FC<TileBoardProps> = ({
     let audio = document.getElementById(
       `pop${Math.trunc(Math.random() * 3) + 1}`,
     ) as HTMLAudioElement;
-    audio?.play();
+    audio.currentTime = 0;
+    audio.play();
   }
 
   function handleTileClick(
