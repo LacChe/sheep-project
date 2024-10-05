@@ -1,15 +1,18 @@
 {
-  "name": "ionic-app-base",
+  "name": "tile-matcher",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "http://LacChe.github.io/tile-matcher",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test.e2e": "cypress run",
     "test.unit": "vitest",
-    "lint": "eslint"
+    "lint": "eslint",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@capacitor/preferences": "^6.0.2",
@@ -36,6 +39,7 @@
     "cypress": "^13.5.0",
     "eslint": "^8.35.0",
     "eslint-plugin-react": "^7.32.2",
+    "gh-pages": "^6.1.1",
     "jsdom": "^22.1.0",
     "terser": "^5.4.0",
     "typescript": "^5.1.6",
