@@ -14,6 +14,8 @@ import HandTiles from '../components/HandTiles';
 import { generateTemplateLevel } from '../utils/levelGenerator';
 import { Preferences } from '@capacitor/preferences';
 import ConfettiExplosion from 'react-confetti-explosion';
+import woohoo from '../assets/audio/woohoo.mp3';
+import shimmer from '../assets/audio/shimmer.mp3';
 import './Game.css';
 
 type GameProps = { loadSave: boolean };
@@ -89,6 +91,8 @@ const Game: React.FC<GameProps> = ({ loadSave = true }) => {
 
   useEffect(() => {
     if (initDone && checkLevelClear()) {
+      let audio = document.getElementById('woohoo') as HTMLAudioElement;
+      audio?.play();
       setIsLevelClearedAlertOpen(true);
     }
   }, [tilesInBoard]);
@@ -128,6 +132,8 @@ const Game: React.FC<GameProps> = ({ loadSave = true }) => {
   function checkThreeOfTheSame() {
     tilesInHand.forEach((tileId) => {
       if (tilesInHand.filter((t) => t === tileId).length === 3) {
+        let audio = document.getElementById('shimmer') as HTMLAudioElement;
+        audio?.play();
         removeTilesFromHand(tileId);
       }
     });
@@ -202,6 +208,8 @@ const Game: React.FC<GameProps> = ({ loadSave = true }) => {
         <div className="confetti">
           {isLevelClearedAlertOpen && <ConfettiExplosion force={1} />}
         </div>
+        <audio id="woohoo" src={woohoo}></audio>
+        <audio id="shimmer" src={shimmer}></audio>
       </IonContent>
     </IonPage>
   );
