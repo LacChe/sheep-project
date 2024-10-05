@@ -6,6 +6,11 @@
   gap: 10px;
 }
 
+.level-header {
+  font-size: 2.5rem;
+  margin-bottom: -10px;
+}
+
 .pointer-disabled * {
   pointer-events: none !important;
 }
@@ -26,6 +31,16 @@
   height: calc(100% - 2px);
   border: 1px solid var(--tile-border-color);
   margin: 1px;
+}
+
+.game-content > ion-button {
+  align-self: flex-start;
+  filter: brightness(95%);
+}
+
+.game-content > ion-button .padded-border {
+  border-width: 2px;
+  padding: 10px;
 }
 
 .confetti {

@@ -1,7 +1,13 @@
 /* For information on how to create your own theme, please see:
 http://ionicframework.com/docs/theming/ */
 
+@font-face {
+  font-family: 'customFont';
+  src: url('../assets/fonts/ComfyFeeling.otf');
+}
+
 :root {
+  --ion-font-family: 'customFont';
   --tile-width: 9vw;
   --tile-max-width: 48px;
   --tile-height: 12vw;

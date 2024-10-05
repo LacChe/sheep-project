@@ -169,18 +169,14 @@ const Game: React.FC<GameProps> = ({ loadSave = true }) => {
 
   return (
     <IonPage>
-      <IonHeader className="ion-no-border">
-        <IonToolbar color="translucent">
-          <IonButtons className="ion-padding" slot="end">
-            <IonButton onClick={() => navigateToHome()}>Back</IonButton>
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
       <IonContent className="ion-padding">
         <div
           className={`game-content${!allowPointer ? ' pointer-disabled' : ''}`}
         >
-          <div>Level {level}</div>
+          <IonButton onClick={() => navigateToHome()}>
+            <div className="padded-border">Back</div>
+          </IonButton>
+          <h1 className="level-header">Level {level}</h1>
           <TilesBoard
             tiles={tilesInBoard}
             setTiles={setTilesInBoard}
