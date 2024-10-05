@@ -8,10 +8,10 @@ http://ionicframework.com/docs/theming/ */
 
 :root {
   --ion-font-family: 'customFont';
-  --tile-width: 9vw;
-  --tile-max-width: 48px;
-  --tile-height: 12vw;
-  --tile-max-height: 64px;
+  --tile-width: 12vw;
+  --tile-max-width: 60px;
+  --tile-height: 16vw;
+  --tile-max-height: 80px;
   --tile-border-color: #691f1f;
   --game-boards-color: #bcdace;
 }

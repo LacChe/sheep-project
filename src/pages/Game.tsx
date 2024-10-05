@@ -173,7 +173,7 @@ const Game: React.FC<GameProps> = ({ loadSave = true }) => {
         <div
           className={`game-content${!allowPointer ? ' pointer-disabled' : ''}`}
         >
-          <IonButton onClick={() => navigateToHome()}>
+          <IonButton className="back-button" onClick={() => navigateToHome()}>
             <div className="padded-border">Back</div>
           </IonButton>
           <h1 className="level-header">Level {level}</h1>
