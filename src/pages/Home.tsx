@@ -8,6 +8,7 @@ import {
 } from '@ionic/react';
 import { useState } from 'react';
 import { Preferences } from '@capacitor/preferences';
+import gifs from '../assets/gifs';
 import './Home.css';
 
 type HomeProps = { setLoadSave: (loadSave: boolean) => void };
@@ -35,7 +36,7 @@ const Home: React.FC<HomeProps> = ({ setLoadSave }) => {
     <IonPage>
       <IonContent>
         <div className="home-content">
-          <IonImg className="hero-icon" src="../../public/favicon.png" />
+          <IonImg className="hero-icon" src={gifs[1]} />
           {saveExists && (
             <IonButton onClick={() => navigateToGame(true)}>Continue</IonButton>
           )}

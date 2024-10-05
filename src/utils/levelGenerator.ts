@@ -1,36 +1,12 @@
 import levelTemplates from './levelTemplates';
+import gifs from '../assets/gifs';
 
 const BOARD_WIDTH = 8;
 const BOARD_HEIGHT = 6;
 
-const VALID_TILE_IDS: string[] = [
-  'a',
-  'b',
-  'c',
-  'd',
-  'e',
-  'f',
-  'g',
-  'h',
-  'i',
-  'j',
-  'k',
-  'l',
-  'm',
-  'n',
-  'o',
-  'p',
-  'q',
-  'r',
-  's',
-  't',
-  'u',
-  'v',
-  'w',
-  'x',
-  'y',
-  'z',
-]; // TODO set to images
+const VALID_TILE_IDS: string[] = [...Array(gifs.length).keys()].map((num) =>
+  num.toString(),
+);
 
 function totalTileAmount(levelArray: string[][][]) {
   let totalTiles = 0;

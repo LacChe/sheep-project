@@ -1,5 +1,6 @@
-import { IonButton, IonCard } from '@ionic/react';
+import { IonButton, IonCard, IonImg } from '@ionic/react';
 import React from 'react';
+import gifs from '../assets/gifs';
 import './HandTiles.css';
 
 type HandTilesProps = {
@@ -30,7 +31,7 @@ const HandTiles: React.FC<HandTilesProps> = ({
           className="tile"
           key={index}
         >
-          {tileId}
+          <IonImg src={gifs[parseInt(tileId)]} />
         </IonButton>
       ))}
     </IonCard>

@@ -11,6 +11,11 @@
 }
 
 .tile {
+  --background: white;
+  --background-hover: white;
+  --background-activated: white;
+  --background-focused: white;
+  --ripple-color: white;
   --border-radius: 2px;
   margin: 0;
   width: var(--tile-width);

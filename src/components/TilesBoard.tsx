@@ -1,5 +1,7 @@
-import { IonButton, IonCard } from '@ionic/react';
+import { IonButton, IonCard, IonIcon, IonImg } from '@ionic/react';
 import React, { Dispatch, SetStateAction } from 'react';
+import gifs from '../assets/gifs';
+import jpgs from '../assets/jpgs';
 import pop1 from '../assets/audio/pop1.mp3';
 import pop2 from '../assets/audio/pop2.mp3';
 import pop3 from '../assets/audio/pop3.mp3';
@@ -139,7 +141,7 @@ const TilesBoard: React.FC<TileBoardProps> = ({
         key={`tile-${layerIndex}-${rowIndex}-${tileIndex}`}
         id={`tile-${layerIndex}-${rowIndex}-${tileIndex}`}
       >
-        {tile}
+        <IonImg src={clickable ? gifs[parseInt(tile)] : jpgs[parseInt(tile)]} />
       </IonButton>
     );
   }

@@ -14,3 +14,8 @@
 .hand-tiles-row > .tiles {
   opacity: 0;
 }
+
+.tile {
+  --padding-start: 0;
+  --padding-end: 0;
+}
