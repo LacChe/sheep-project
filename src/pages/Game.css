@@ -48,3 +48,12 @@
   top: 50vh;
   left: 50vw;
 }
+
+.alert-wrapper {
+  border-radius: 30px !important;
+  background: white !important;
+}
+
+.alert-title {
+  color: var(--tile-border-color) !important;
+}

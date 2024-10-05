@@ -32,6 +32,7 @@ function totalTileAmount(levelArray: string[][][]) {
 
 export function generateTemplateLevel(level: number) {
   let tilesOnBoard: string[][][] = [];
+  let randmizedTileIds = shuffle(VALID_TILE_IDS);
 
   // generate list of shuffled tiles to be added to board
   const ALLOWED_TILE_IDS_AMOUNT = level + 3;
@@ -39,9 +40,9 @@ export function generateTemplateLevel(level: number) {
   for (let i = 0; i < totalTileAmount(levelTemplates[level]); i += 3) {
     const RANDOM_INDEX = Math.trunc(Math.random() * ALLOWED_TILE_IDS_AMOUNT);
     tilesToBeAdded.push(
-      VALID_TILE_IDS[RANDOM_INDEX],
-      VALID_TILE_IDS[RANDOM_INDEX],
-      VALID_TILE_IDS[RANDOM_INDEX],
+      randmizedTileIds[RANDOM_INDEX],
+      randmizedTileIds[RANDOM_INDEX],
+      randmizedTileIds[RANDOM_INDEX],
     );
   }
   tilesToBeAdded = shuffle(tilesToBeAdded);
@@ -75,6 +76,7 @@ export function generateTemplateLevel(level: number) {
 
 export function generateBasicLevel(level: number) {
   let tilesOnBoard: string[][][] = [];
+  let randmizedTileIds = shuffle(VALID_TILE_IDS);
 
   // generate list of shuffled tiles to be added to board
   const ALLOWED_TILE_IDS_AMOUNT = level + 3;
@@ -87,9 +89,9 @@ export function generateBasicLevel(level: number) {
     const BLANK_TILE = Math.random() < 0.3;
     if (i + 3 < TOTAL_TILE_AMOUNT && !BLANK_TILE) {
       tilesToBeAdded.push(
-        VALID_TILE_IDS[RANDOM_INDEX],
-        VALID_TILE_IDS[RANDOM_INDEX],
-        VALID_TILE_IDS[RANDOM_INDEX],
+        randmizedTileIds[RANDOM_INDEX],
+        randmizedTileIds[RANDOM_INDEX],
+        randmizedTileIds[RANDOM_INDEX],
       );
       i += 2;
     } else {

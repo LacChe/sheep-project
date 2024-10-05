@@ -151,7 +151,7 @@ const Game: React.FC<GameProps> = ({ loadSave = true }) => {
       }, 50);
       setTimeout(() => {
         setAllowPointer(true);
-      }, 200);
+      }, 400);
     } else throw new Error("Can't add more than 7 tiles to a row");
   }
 
@@ -164,7 +164,7 @@ const Game: React.FC<GameProps> = ({ loadSave = true }) => {
       setTilesInHand((prev) => prev.filter((t) => t !== tileId));
       setRemoveTileId('');
       setAllowPointer(true);
-    }, 200);
+    }, 400);
   }
 
   return (
