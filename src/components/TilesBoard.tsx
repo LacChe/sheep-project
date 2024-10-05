@@ -141,7 +141,11 @@ const TilesBoard: React.FC<TileBoardProps> = ({
         key={`tile-${layerIndex}-${rowIndex}-${tileIndex}`}
         id={`tile-${layerIndex}-${rowIndex}-${tileIndex}`}
       >
-        <IonImg src={clickable ? gifs[parseInt(tile)] : jpgs[parseInt(tile)]} />
+        <div className="padded-border">
+          <IonImg
+            src={clickable ? gifs[parseInt(tile)] : jpgs[parseInt(tile)]}
+          />
+        </div>
       </IonButton>
     );
   }

@@ -36,11 +36,22 @@ const Home: React.FC<HomeProps> = ({ setLoadSave }) => {
     <IonPage>
       <IonContent>
         <div className="home-content">
-          <IonImg className="hero-icon" src={gifs[1]} />
+          <div className="hero-icon-container ">
+            <div className="padded-border">
+              <IonImg
+                className="hero-icon"
+                src={gifs[Math.trunc(Math.random() * gifs.length)]}
+              />
+            </div>
+          </div>
           {saveExists && (
-            <IonButton onClick={() => navigateToGame(true)}>Continue</IonButton>
+            <IonButton onClick={() => navigateToGame(true)}>
+              <div className="padded-border">Continue</div>
+            </IonButton>
           )}
-          <IonButton onClick={() => navigateToGame(false)}>New Game</IonButton>
+          <IonButton onClick={() => navigateToGame(false)}>
+            <div className="padded-border">New Game</div>
+          </IonButton>
         </div>
       </IonContent>
     </IonPage>

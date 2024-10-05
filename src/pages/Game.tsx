@@ -126,7 +126,7 @@ const Game: React.FC<GameProps> = ({ loadSave = true }) => {
   useEffect(() => {
     setTimeout(() => {
       checkThreeOfTheSame();
-    }, 200);
+    }, 400);
   }, [tilesInHand]);
 
   function checkThreeOfTheSame() {
@@ -146,7 +146,7 @@ const Game: React.FC<GameProps> = ({ loadSave = true }) => {
       setAllowPointer(false);
       setTimeout(() => {
         setJustAddedTile(false);
-      }, 200);
+      }, 50);
       setTimeout(() => {
         setAllowPointer(true);
       }, 200);

@@ -18,21 +18,28 @@ const HandTiles: React.FC<HandTilesProps> = ({
     <IonCard className="hand-tiles-row">
       {tilesInHand.map((tileId, index) => (
         // transition opacity when adding or removing tile
-        <IonButton
+        <div
           style={{
             transition:
-              removeTileId === tileId ||
-              (index === tilesInHand.length - 1 && justAddedtile)
-                ? 'all 0.2s ease-in-out'
+              removeTileId === tileId
+                ? 'all 0.3s ease-in-out'
+                : index === tilesInHand.length - 1
+                ? 'opacity 0.2s ease-in-out'
                 : 'none',
             width: removeTileId === tileId ? '0px' : 'var(--tile-width)',
-            opacity: removeTileId === tileId ? '0' : '1',
+            opacity:
+              removeTileId !== tileId &&
+              !(index === tilesInHand.length - 1 && justAddedtile)
+                ? '1'
+                : '0',
           }}
           className="tile"
           key={index}
         >
-          <IonImg src={gifs[parseInt(tileId)]} />
-        </IonButton>
+          <div className="padded-border">
+            <IonImg src={gifs[parseInt(tileId)]} />
+          </div>
+        </div>
       ))}
     </IonCard>
   );

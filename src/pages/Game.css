@@ -11,18 +11,21 @@
 }
 
 .tile {
-  --background: white;
-  --background-hover: white;
-  --background-activated: white;
-  --background-focused: white;
-  --ripple-color: white;
-  --border-radius: 2px;
   margin: 0;
   width: var(--tile-width);
   max-width: var(--tile-max-width);
   height: var(--tile-height);
   max-height: var(--tile-max-height);
   box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.5);
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+.game-content .padded-border {
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+  border: 1px solid var(--tile-border-color);
+  margin: 1px;
 }
 
 .confetti {

@@ -6,4 +6,6 @@ http://ionicframework.com/docs/theming/ */
   --tile-max-width: 48px;
   --tile-height: 12vw;
   --tile-max-height: 64px;
+  --tile-border-color: #691f1f;
+  --game-boards-color: #bcdace;
 }

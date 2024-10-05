@@ -1,3 +1,11 @@
+* {
+  color: black;
+}
+
+ion-content {
+  --background: url('../assets/background.jpg') no-repeat center center / cover;
+}
+
 .home-content {
   padding-top: 40vh;
   display: flex;
@@ -9,4 +17,44 @@
 
 .hero-icon::part(image) {
   max-width: 100px;
+}
+
+.hero-icon-container {
+  border-radius: 4px;
+  background-color: white;
+  width: calc(var(--tile-width) * 4);
+  max-width: calc(var(--tile-max-width) * 2);
+  height: calc(var(--tile-height) * 4);
+  max-height: calc(var(--tile-max-height) * 2);
+}
+
+.padded-border {
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-content .padded-border {
+  width: calc(100% - 8px);
+  height: calc(100% - 8px);
+  border: 2px solid var(--tile-border-color);
+  margin: 4px;
+}
+
+.home-content ion-button .padded-border {
+  padding: 10px;
+}
+
+ion-button::part(native) {
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  --background: white;
+  --background-hover: white;
+  --background-activated: white;
+  --background-focused: white;
+  --ripple-color: white;
+  --border-radius: 4px;
 }
