@@ -2,9 +2,6 @@ import { IonButton, IonCard, IonIcon, IonImg } from '@ionic/react';
 import React, { Dispatch, SetStateAction } from 'react';
 import gifs from '../assets/gifs';
 import jpgs from '../assets/jpgs';
-import pop1 from '../assets/audio/pop1.mp3';
-import pop2 from '../assets/audio/pop2.mp3';
-import pop3 from '../assets/audio/pop3.mp3';
 
 import './TilesBoard.css';
 
@@ -32,21 +29,12 @@ const TilesBoard: React.FC<TileBoardProps> = ({
     '--tile-max-height',
   );
 
-  function playAudio() {
-    let audio = document.getElementById(
-      `pop${Math.trunc(Math.random() * 3) + 1}`,
-    ) as HTMLAudioElement;
-    audio.currentTime = 0;
-    audio.play();
-  }
-
   function handleTileClick(
     layerIndex: number,
     rowIndex: number,
     tileIndex: number,
     tile: string,
   ) {
-    playAudio();
     try {
       addTileToHand(tile);
       // fade tile out
@@ -192,9 +180,6 @@ const TilesBoard: React.FC<TileBoardProps> = ({
         </div>
         // END LAYER
       ))}
-      <audio id="pop1" src={pop1}></audio>
-      <audio id="pop2" src={pop2}></audio>
-      <audio id="pop3" src={pop3}></audio>
     </IonCard>
   );
 };

@@ -309,4 +309,4 @@ const cross = [
   ],
 */
 
-export default [pyramid, cross, heart, spiral];
+export default [cross, pyramid, heart, spiral];

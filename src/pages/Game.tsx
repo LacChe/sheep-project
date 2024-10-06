@@ -1,11 +1,8 @@
 import {
   IonAlert,
   IonButton,
-  IonButtons,
   IonContent,
-  IonHeader,
   IonPage,
-  IonToolbar,
   useIonRouter,
 } from '@ionic/react';
 import React, { useEffect, useState } from 'react';
@@ -16,6 +13,9 @@ import { Preferences } from '@capacitor/preferences';
 import ConfettiExplosion from 'react-confetti-explosion';
 import woohoo from '../assets/audio/woohoo.mp3';
 import shimmer from '../assets/audio/shimmer.mp3';
+import pop1 from '../assets/audio/pop1.mp3';
+import pop2 from '../assets/audio/pop2.mp3';
+import pop3 from '../assets/audio/pop3.mp3';
 import './Game.css';
 
 type GameProps = { loadSave: boolean };
@@ -143,6 +143,11 @@ const Game: React.FC<GameProps> = ({ loadSave = true }) => {
 
   function addTileToHand(tile: string) {
     if (tilesInHand.length < 7) {
+      let audio = document.getElementById(
+        `pop${Math.trunc(Math.random() * 3) + 1}`,
+      ) as HTMLAudioElement;
+      audio.currentTime = 0;
+      audio.play();
       setTilesInHand((prev) => [...prev, tile]);
       setJustAddedTile(true);
       setAllowPointer(false);
@@ -208,6 +213,9 @@ const Game: React.FC<GameProps> = ({ loadSave = true }) => {
         </div>
         <audio id="woohoo" src={woohoo}></audio>
         <audio id="shimmer" src={shimmer}></audio>
+        <audio id="pop1" src={pop1}></audio>
+        <audio id="pop2" src={pop2}></audio>
+        <audio id="pop3" src={pop3}></audio>
       </IonContent>
     </IonPage>
   );
